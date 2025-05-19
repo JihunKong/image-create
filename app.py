@@ -41,7 +41,8 @@ def generate_image_with_gpt_image_1(prompt, api_key):
         client = OpenAI(api_key=api_key)
         result = client.images.generate(
             model="gpt-image-1",
-            prompt=prompt
+            prompt=prompt,
+            size="1536x1024"
         )
         image_base64 = result.data[0].b64_json
         image_bytes = base64.b64decode(image_base64)
@@ -51,7 +52,7 @@ def generate_image_with_gpt_image_1(prompt, api_key):
         return None
 
 def main():
-    st.title("🖼️ GPT Image 1 - AI 이미지 생성기 (1024x1536, Low)")
+    st.title("🖼️ GPT Image 1 - AI 이미지 생성기 (1536x1024, Low)")
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         st.error("OPENAI_API_KEY 환경 변수가 설정되어 있지 않습니다.")
@@ -85,7 +86,7 @@ def main():
         with st.spinner("이미지 생성 중입니다..."):
             image_bytes = generate_image_with_gpt_image_1(prompt, api_key)
             if image_bytes:
-                st.image(image_bytes, caption="생성된 이미지 (1024x1536, Low)")
+                st.image(image_bytes, caption="생성된 이미지 (1536x1024, Low)")
                 st.download_button(
                     label="이미지 다운로드",
                     data=image_bytes,
